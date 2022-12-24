@@ -11,8 +11,6 @@ class EdgeBase(BaseModel):
     higher_id: int
     class Config:
         orm_mode = True
-    # lower_node
-    # higher_node
 
 class EdgeCreate(EdgeBase):
     pass
@@ -49,3 +47,33 @@ EdgeBase.update_forward_refs()
 Edge.update_forward_refs()
 EdgeCreate.update_forward_refs()
 Point.update_forward_refs()
+
+
+
+"""
+class Floor(Base):
+    __tablename__ = "floors"
+
+    id: int
+    name: int 
+    description: int 
+    map_image: int
+    map_points: int
+    #lat: int
+    #long: int - include Building model?
+
+class MapPoint(Base):
+    __tablename__ = "floor_map_points"
+    x: int
+    y: int
+    order: int
+
+class Image(Base):
+    __tablename__ = "images"
+
+    id: int
+    url: int
+    width: int 
+    height: int
+"""
+

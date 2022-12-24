@@ -1,10 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.wsgi import WSGIMiddleware
 import models, crud, schemas
 
 from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
+from flask import Flask
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+
+"""Create all models in the database.
+Simplified method - typically Alembic would be used for handling migrations"""
 models.Base.metadata.create_all(bind=engine)
 
 def get_db():
@@ -14,49 +21,7 @@ def get_db():
     finally:
         db.close()
 
-"""
-class Floor(Base):
-    __tablename__ = "floors"
-
-    id: int
-    name: int 
-    description: int 
-    map_image: int
-    map_points: int
-    #lat: int
-    #long: int - include Building model?
-
-class MapPoint(Base):
-    __tablename__ = "floor_map_points"
-    x: int
-    y: int
-    order: int
-
-class Image(Base):
-    __tablename__ = "images"
-
-    id: int
-    url: int
-    width: int 
-    height: int
-"""
-
 app = FastAPI()
-
-"""
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
-
-@app.get("/path/{start_point}/{end_point}")
-def get_route(start_point: int, end_point: int):
-    return {"start_point": start_point, "end_point": end_point}
-
-"""
 
 @app.get("/point/{point_id}", response_model=schemas.Point)
 def get_point(point_id: int, db: Session = Depends(get_db)):
@@ -74,3 +39,10 @@ def create_edge(edge: schemas.EdgeCreate, db: Session = Depends(get_db)):
         return crud.create_edge(db, edge)
     except IntegrityError:
         raise HTTPException(status_code=409, detail="Edge already exists")
+
+flask_app = Flask(__name__)
+flask_admin = Admin(flask_app, name='USOS', template_mode='bootstrap4')
+flask_admin.add_view(ModelView(models.Point, SessionLocal()))
+flask_admin.add_view(ModelView(models.Edge, SessionLocal()))
+
+app.mount("/v1", WSGIMiddleware(flask_app))
