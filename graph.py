@@ -3,15 +3,15 @@ import models
 
 def BFS(adjacency_lists, start, goal):
     # You can easily optimize this function by using a deque for queue variable
-    assert start != goal 
+    assert start != goal
     explored, queue = [], [[start]]
     while queue:
         path = queue.pop(0)
         node = path[-1]
-         
+
         if node not in explored:
             neighbours = adjacency_lists[node]
-             
+
             for neighbour in neighbours:
                 new_path = list(path)
                 new_path.append(neighbour)
@@ -21,11 +21,11 @@ def BFS(adjacency_lists, start, goal):
                     return new_path
 
             explored.append(node)
- 
+
     return None
 
 
-def get_path(edges: list[models.Edge], start: int, end: int) -> list[int] | None:    
+def get_path(edges: list[models.Edge], start: int, end: int) -> list[int] | None:
     if start == end:
         raise ValueError("Start and end IDs must not be identical!")
 
@@ -39,7 +39,7 @@ def get_path(edges: list[models.Edge], start: int, end: int) -> list[int] | None
     for edge in edges:
         if edge.from_point_id not in adjacency_lists:
             adjacency_lists[edge.from_point_id] = []
-        
+
         adjacency_lists[edge.from_point_id].append(edge.to_point_id)
 
     return BFS(adjacency_lists, start, end)

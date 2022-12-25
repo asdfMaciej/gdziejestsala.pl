@@ -22,35 +22,43 @@ def get_db():
     finally:
         db.close()
 
-app = FastAPI(
-    title="USOS"
-)
 
-@app.get("/points", 
+app = FastAPI(title="USOS")
+
+
+@app.get(
+    "/points",
     response_model=list[schemas.PointNeighbour],
-    description="Returns a list of all available points."
+    description="Returns a list of all available points.",
 )
 def get_points(db: Session = Depends(get_db)):
     return crud.get_points(db)
 
-@app.get("/route/{start_point_id}/{destination_point_id}", 
-    response_model=schemas.Path, 
+
+@app.get(
+    "/route/{start_point_id}/{destination_point_id}",
+    response_model=schemas.Path,
     responses={
         404: {"description": "Path not found"},
-        400: {"description": "Invalid arguments"}
+        400: {"description": "Invalid arguments"},
     },
-    description="Generate route between two given points."
+    description="Generate route between two given points.",
 )
-def get_route(start_point_id: int, destination_point_id: int, db: Session = Depends(get_db)):
+def get_route(
+    start_point_id: int, destination_point_id: int, db: Session = Depends(get_db)
+):
+    # TODO: Check if start and destination points exist
     # Fetch all edges from DB and generate route in-memory
-    all_edges = crud.get_edges(db)    
+    all_edges = crud.get_edges(db)
     try:
         path_point_ids = graph.get_path(all_edges, start_point_id, destination_point_id)
     except AssertionError:
-        raise HTTPException(status_code=400, detail="Start and destination must be different")
+        raise HTTPException(
+            status_code=400, detail="Start and destination must be different"
+        )
 
     # Get details for each point en route
-    if not path_point_ids:
+    if path_point_ids is None:
         raise HTTPException(status_code=404, detail="Path not found")
     path_points = crud.get_points_by_ids(db, path_point_ids)
 
@@ -58,14 +66,11 @@ def get_route(start_point_id: int, destination_point_id: int, db: Session = Depe
     point_positions = {}
     for position, id in enumerate(path_point_ids):
         point_positions[id] = position
-    
-    path_points = sorted(path_points, key=lambda o:point_positions[o.id])
+
+    path_points = sorted(path_points, key=lambda o: point_positions[o.id])
 
     # Returns the results
-    path = schemas.Path(
-        path = path_points,
-        floors = []
-    )
+    path = schemas.Path(path=path_points, floors=[])
     return path
 
 
