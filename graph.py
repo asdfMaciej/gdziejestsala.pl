@@ -2,8 +2,7 @@ import models
 
 
 def BFS(adjacency_lists, start, goal):
-    # You can easily optimize this function by 
-    #   using a deque instead of list for queue
+    # You can easily optimize this function by using a deque for queue variable
     assert start != goal 
     explored, queue = [], [[start]]
     while queue:
@@ -34,7 +33,7 @@ def get_path(edges: list[models.Edge], start: int, end: int) -> list[int] | None
     We should generate empty adjacency lists for classrooms
     So BFS doesn't route a path through the middle of a classroom,
       but still can find a path leading to one
-    Right now there is no support in models, so just dropping this comment there
+    At the moment of writing there is no support for classroom points
     """
     adjacency_lists = {}
     for edge in edges:

@@ -31,9 +31,4 @@ def get_point_max_id(db: Session):
 
 def get_points_by_ids(db: Session, points_id: list[int]):
     points = db.query(models.Point).filter(models.Point.id.in_(points_id)).all()
-    point_positions = {}
-    for position, id in enumerate(points_id):
-        point_positions[id] = position
-    
-    points = sorted(points, key=lambda o:point_positions[o.id])
     return points
