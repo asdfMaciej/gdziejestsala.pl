@@ -10,29 +10,32 @@ class Point(Base):
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
 
+    def __str__(self):
+        return f"<{self.id}> {self.name}"
+
 class Edge(Base):
     __tablename__ = "edges"
     
-    lower_id = Column(
+    from_point_id = Column(
         Integer,
         ForeignKey('points.id'),
         primary_key=True
     )
 
-    higher_id = Column(
+    to_point_id = Column(
         Integer,
         ForeignKey('points.id'),
         primary_key=True
     )
 
-    lower_node = relationship(
+    from_point = relationship(
         Point,
-        primaryjoin = lower_id == Point.id,
-        backref='lower_edges'
+        primaryjoin = from_point_id == Point.id,
+        backref='connected_from'
     )
 
-    higher_node = relationship(
+    to_point = relationship(
         Point, 
-        primaryjoin = higher_id == Point.id,
-        backref='higher_edges'
+        primaryjoin = to_point_id == Point.id,
+        backref='connected_to'
     )

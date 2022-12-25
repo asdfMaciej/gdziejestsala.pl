@@ -7,8 +7,8 @@ Point = ForwardRef('Point')
 Edge = ForwardRef('Edge')
 
 class EdgeBase(BaseModel):
-    lower_id: int
-    higher_id: int
+    from_point_id: int
+    to_point_id: int
     class Config:
         orm_mode = True
 
@@ -16,8 +16,8 @@ class EdgeCreate(EdgeBase):
     pass
 
 class Edge(EdgeBase):
-    lower_node: PointNeighbour 
-    higher_node: PointNeighbour
+    from_point: PointNeighbour 
+    to_point: PointNeighbour
     pass
 
 class PointBase(BaseModel):
@@ -33,7 +33,8 @@ class PointNeighbour(PointBase):
     id: int
 
 class Point(PointNeighbour):
-    lower_edges: list[Edge]
+    connected_from: list[Edge]
+    connected_to: list[Edge]
 
 """
 As classes are referenced in type hints before their declaration,
@@ -47,6 +48,14 @@ EdgeBase.update_forward_refs()
 Edge.update_forward_refs()
 EdgeCreate.update_forward_refs()
 Point.update_forward_refs()
+
+class Floor(BaseModel):
+    id: int
+    name: str 
+
+class Path(BaseModel):
+    path: list[PointNeighbour]
+    floors: list[Floor]
 
 
 

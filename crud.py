@@ -19,3 +19,21 @@ def create_edge(db: Session, edge: schemas.EdgeCreate):
 
 def get_point(db: Session, point_id: int):
     return db.query(models.Point).filter(models.Point.id == point_id).first()
+
+def get_points(db: Session):
+    return db.query(models.Point).all()
+
+def get_edges(db: Session) -> list[models.Edge]:
+    return db.query(models.Edge).all()
+
+def get_point_max_id(db: Session):
+    return db.query(models.Point.id).order_by(models.Point.id.desc()).first().id
+
+def get_points_by_ids(db: Session, points_id: list[int]):
+    points = db.query(models.Point).filter(models.Point.id.in_(points_id)).all()
+    point_positions = {}
+    for position, id in enumerate(points_id):
+        point_positions[id] = position
+    
+    points = sorted(points, key=lambda o:point_positions[o.id])
+    return points
