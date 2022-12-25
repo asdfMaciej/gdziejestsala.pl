@@ -73,8 +73,10 @@ def get_route(start_point_id: int, destination_point_id: int, db: Session = Depe
 flask_app = Flask(__name__)
 flask_app.secret_key = "SUPER SECRET KEY!!!"  # TODO: read from .env
 
-flask_admin = Admin(flask_app, name='USOS', template_mode='bootstrap4')
+flask_admin = Admin(flask_app, name="USOS", template_mode="bootstrap4")
 flask_admin.add_view(ModelView(models.Point, SessionLocal()))
 flask_admin.add_view(ModelView(models.Edge, SessionLocal()))
+flask_admin.add_view(ModelView(models.Image, SessionLocal()))
+flask_admin.add_view(ModelView(models.Floor, SessionLocal()))
 
 app.mount("/v1", WSGIMiddleware(flask_app))
