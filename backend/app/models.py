@@ -79,7 +79,7 @@ class User(Base):
     last_name = Column(String(100))
     login = Column(String(80), unique=True)
     email = Column(String(120))
-    password = Column(String(64))
+    password = Column(String(128))
 
     # Flask-Login integration
     @property
