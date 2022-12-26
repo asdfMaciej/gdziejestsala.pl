@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 
-import models
-import schemas
+from . import models, schemas
 
 
 def create_point(db: Session, point: schemas.PointBase):

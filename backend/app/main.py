@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.wsgi import WSGIMiddleware
-import models, crud, schemas, graph, admin
+from . import models, crud, schemas, graph, admin
 
-from database import SessionLocal, engine, get_db
+from .database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 

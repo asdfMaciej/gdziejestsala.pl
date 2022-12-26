@@ -1,4 +1,4 @@
-import models
+from . import models
 
 
 def BFS(adjacency_lists, start, goal):

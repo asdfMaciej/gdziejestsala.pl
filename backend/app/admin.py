@@ -1,8 +1,7 @@
 import secrets
-import models
+from . import models
 import flask, flask_login, flask_admin
-from wtforms import form, fields, validators
-from database import SessionLocal
+from .database import SessionLocal
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask import Flask
