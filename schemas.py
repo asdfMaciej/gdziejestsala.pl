@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 Point = ForwardRef("Point")
 Edge = ForwardRef("Edge")
+FloorPoint = ForwardRef("FloorPoint")
 
 
 class EdgeBase(BaseModel):
@@ -31,24 +32,12 @@ class PointBase(BaseModel):
 
 class PointNeighbour(PointBase):
     id: int
+    floors: list[FloorPointWithFloor]
 
 
 class Point(PointNeighbour):
     connected_from: list[Edge]
     connected_to: list[Edge]
-
-
-"""
-As classes are referenced in type hints before their declaration,
-  Point and Edge are both defined using ForwardRef,
-  so type hints work properly and schema can be generated
-
-After schemas are defined, it is important to call update_forward_refs
-  to change the type hint from ForwardRef to the actual class
-"""
-EdgeBase.update_forward_refs()
-Edge.update_forward_refs()
-Point.update_forward_refs()
 
 
 class ImageBase(BaseModel):
@@ -78,17 +67,47 @@ class Floor(FloorBase):
     id: int
 
 
+class FloorPointBase(BaseModel):
+    # In case we decide to use a different display method
+    #  than a single point for a map floor,
+    # we can always create an extra table - right now this is sufficient
+    x: int | None
+    y: int | None
+
+    class Config:
+        orm_mode = True
+
+
+class FloorPointWithFloor(FloorPointBase):
+    floor: Floor
+    id: int
+
+
+class FloorPointWithPoint(FloorPointBase):
+    point: Point
+    id: int
+
+
+class FloorPoint(FloorPointBase):
+    floor: Floor
+    point: Point
+    id: int
+
+
+"""
+As classes are referenced in type hints before their declaration,
+  Point and Edge are both defined using ForwardRef,
+  so type hints work properly and schema can be generated
+
+After schemas are defined, it is important to call update_forward_refs
+  to change the type hint from ForwardRef to the actual class
+"""
+EdgeBase.update_forward_refs()
+Edge.update_forward_refs()
+Point.update_forward_refs()
+PointNeighbour.update_forward_refs()
+
 # Non-DB model
 class Path(BaseModel):
     path: list[PointNeighbour]
     floors: list[Floor]
-
-
-"""
-class MapPoint(BaseModel):
-    id: int
-    floor: Floor
-    point: Point
-    x: int
-    y: int
-"""

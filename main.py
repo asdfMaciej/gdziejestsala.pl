@@ -83,5 +83,7 @@ flask_admin.add_view(ModelView(models.Point, SessionLocal()))
 flask_admin.add_view(ModelView(models.Edge, SessionLocal()))
 flask_admin.add_view(ModelView(models.Image, SessionLocal()))
 flask_admin.add_view(ModelView(models.Floor, SessionLocal()))
+flask_admin.add_view(ModelView(models.FloorPoint, SessionLocal()))
+
 
 app.mount("/v1", WSGIMiddleware(flask_app))
