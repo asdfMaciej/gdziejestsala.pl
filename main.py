@@ -51,10 +51,12 @@ def get_route(
     start_point_id: int, destination_point_id: int, db: Session = Depends(get_db)
 ):
     # TODO: Check if start and destination points exist
-    # Fetch all edges from DB and generate route in-memory
-    all_edges = crud.get_edges(db)
+    # Fetch suitable edges from DB and generate route in-memory
+    pathfinding_edges = crud.get_edges_for_pathfinding(db, start_point_id)
     try:
-        path_point_ids = graph.get_path(all_edges, start_point_id, destination_point_id)
+        path_point_ids = graph.get_path(
+            pathfinding_edges, start_point_id, destination_point_id
+        )
     except AssertionError:
         raise HTTPException(
             status_code=400, detail="Start and destination must be different"

@@ -39,6 +39,8 @@ def get_path(edges: list[models.Edge], start: int, end: int) -> list[int] | None
     for edge in edges:
         if edge.from_point_id not in adjacency_lists:
             adjacency_lists[edge.from_point_id] = []
+        if edge.to_point_id not in adjacency_lists:
+            adjacency_lists[edge.to_point_id] = []
 
         adjacency_lists[edge.from_point_id].append(edge.to_point_id)
 

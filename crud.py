@@ -32,6 +32,29 @@ def get_edges(db: Session) -> list[models.Edge]:
     return db.query(models.Edge).all()
 
 
+def get_edges_for_pathfinding(db: Session, start_point_id: int) -> list[models.Edge]:
+    """Get a list of edges that are suitable for pathfinding.
+
+    Outcoming edges will be omitted for classrooms that aren't the starting point.
+    This means that a path won't be routed through a middle of a classroom.
+
+    Args:
+        db (Session): Database session
+        start_point_id (int): ID of the start point
+
+    Returns:
+        list[models.Edge]: List of edges suitable for pathfinding
+    """
+    return (
+        db.query(models.Edge)
+        .join(models.Point, models.Point.id == models.Edge.from_point_id)
+        .filter(
+            (models.Point.is_classroom == False) | (models.Point.id == start_point_id)
+        )
+        .all()
+    )
+
+
 def get_point_max_id(db: Session):
     return db.query(models.Point.id).order_by(models.Point.id.desc()).first().id
 

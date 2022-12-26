@@ -9,6 +9,7 @@ class Point(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
+    is_classroom = Column(Boolean, nullable=False)
 
     floors = relationship("FloorPoint", back_populates="point")
 

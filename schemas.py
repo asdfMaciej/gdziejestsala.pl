@@ -25,6 +25,7 @@ class Edge(EdgeBase):
 class PointBase(BaseModel):
     name: str
     description: str | None
+    is_classroom: bool
 
     class Config:
         orm_mode = True
@@ -55,7 +56,7 @@ class Image(ImageBase):
 
 class FloorBase(BaseModel):
     name: str
-    description: str
+    description: str | None
     map_image: Image | None
     # lat: int
     # long: int - add Building model?
