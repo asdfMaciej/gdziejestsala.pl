@@ -21,3 +21,11 @@ event.listen(engine, "connect", _fk_pragma_on_connect)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+# This function is required to provide an unique, auto-closed connection per request
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.wsgi import WSGIMiddleware
 import models, crud, schemas, graph, admin
 
-from database import SessionLocal, engine
+from database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
@@ -10,14 +10,6 @@ from sqlalchemy.exc import IntegrityError
 """Create all models in the database.
 Simplified method - typically Alembic would be used for handling migrations"""
 models.Base.metadata.create_all(bind=engine)
-
-# This function is required to provide an unique, auto-closed connection per request
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 app = FastAPI(title="USOS")
