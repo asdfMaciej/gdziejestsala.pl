@@ -7,11 +7,6 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 
-"""Create all models in the database.
-Simplified method - typically Alembic would be used for handling migrations"""
-models.Base.metadata.create_all(bind=engine)
-
-
 app = FastAPI(title="USOS")
 
 

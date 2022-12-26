@@ -7,6 +7,10 @@ services:
     volumes:
       - ./backend:/app
     command: /start-reload.sh
+    environment:
+      - DATABASE_URL=postgresql://usos_user:usos_password@db/usos_db
+    depends_on:
+      - "db"
   db:
     image: postgres:14-alpine
     volumes:
