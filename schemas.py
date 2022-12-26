@@ -79,13 +79,11 @@ class FloorPointBase(BaseModel):
 
 
 class FloorPointWithFloor(FloorPointBase):
-    floor: Floor
-    id: int
+    floor_id: int
 
 
 class FloorPointWithPoint(FloorPointBase):
-    point: Point
-    id: int
+    point_id: int
 
 
 class FloorPoint(FloorPointBase):
@@ -107,7 +105,14 @@ Edge.update_forward_refs()
 Point.update_forward_refs()
 PointNeighbour.update_forward_refs()
 
-# Non-DB model
+# Non-DB models below
 class Path(BaseModel):
     path: list[PointNeighbour]
-    floors: list[Floor]
+    floors: dict[int, Floor]
+
+
+# Order-agnostic response
+# Same schema, but different semantics - hence the rename
+class PointsResponse(BaseModel):
+    points: list[PointNeighbour]
+    floors: dict[int, Floor]

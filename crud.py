@@ -36,6 +36,31 @@ def get_point_max_id(db: Session):
     return db.query(models.Point.id).order_by(models.Point.id.desc()).first().id
 
 
-def get_points_by_ids(db: Session, points_id: list[int]):
+def get_points_by_ids(db: Session, points_id: list[int]) -> list[models.Point]:
     points = db.query(models.Point).filter(models.Point.id.in_(points_id)).all()
     return points
+
+
+def get_floors_by_ids(db: Session, floors_id: list[int]) -> list[models.Floor]:
+    floors = db.query(models.Floor).filter(models.Floor.id.in_(floors_id)).all()
+    return floors
+
+
+def get_floors_by_id_for_points(
+    db: Session, points_list: list[models.Point]
+) -> dict[int, models.Floor]:
+    # Get unique floor IDs
+    floor_ids = set()
+    for point in points_list:
+        for floor in point.floors:
+            floor_ids.add(floor.floor_id)
+
+    # Fetch their data
+    floors = get_floors_by_ids(db, list(floor_ids))
+
+    # Convert them to ID -> floor
+    floors_by_id = {}
+    for floor in floors:
+        floors_by_id[floor.id] = floor
+
+    return floors_by_id

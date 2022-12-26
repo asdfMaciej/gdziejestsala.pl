@@ -28,11 +28,14 @@ app = FastAPI(title="USOS")
 
 @app.get(
     "/points",
-    response_model=list[schemas.PointNeighbour],
+    response_model=schemas.PointsResponse,
     description="Returns a list of all available points.",
 )
 def get_points(db: Session = Depends(get_db)):
-    return crud.get_points(db)
+    points = crud.get_points(db)
+    floors_by_id = crud.get_floors_by_id_for_points(db, points)
+    response = schemas.PointsResponse(points=points, floors=floors_by_id)
+    return response
 
 
 @app.get(
@@ -69,8 +72,11 @@ def get_route(
 
     path_points = sorted(path_points, key=lambda o: point_positions[o.id])
 
-    # Returns the results
-    path = schemas.Path(path=path_points, floors=[])
+    # Retrieve floor details for present floors
+    floors_by_id = crud.get_floors_by_id_for_points(db, path_points)
+
+    # Return the results
+    path = schemas.Path(path=path_points, floors=floors_by_id)
     return path
 
 
