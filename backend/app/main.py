@@ -1,14 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.wsgi import WSGIMiddleware
-import models, crud, schemas, graph
+import models, crud, schemas, graph, admin
 
 from database import SessionLocal, engine
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
-from flask import Flask
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
 
 """Create all models in the database.
 Simplified method - typically Alembic would be used for handling migrations"""
@@ -82,16 +79,4 @@ def get_route(
     return path
 
 
-# Include an admin panel for CRUD operations
-flask_app = Flask(__name__)
-flask_app.secret_key = "SUPER SECRET KEY!!!"  # TODO: read from .env
-
-flask_admin = Admin(flask_app, name="USOS", template_mode="bootstrap4")
-flask_admin.add_view(ModelView(models.Point, SessionLocal()))
-flask_admin.add_view(ModelView(models.Edge, SessionLocal()))
-flask_admin.add_view(ModelView(models.Image, SessionLocal()))
-flask_admin.add_view(ModelView(models.Floor, SessionLocal()))
-flask_admin.add_view(ModelView(models.FloorPoint, SessionLocal()))
-
-
-app.mount("/v1", WSGIMiddleware(flask_app))
+app.mount("/admin", WSGIMiddleware(admin.flask_app))
