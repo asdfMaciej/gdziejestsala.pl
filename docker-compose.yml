@@ -8,7 +8,7 @@ services:
       - ./backend:/app
     command: /start-reload.sh
     environment:
-      - DATABASE_URL=postgresql://usos_user:usos_password@db/usos_db
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - "db"
   db:
@@ -20,9 +20,9 @@ services:
     # expose:
     #  - 5432
     environment:
-      - POSTGRES_USER=usos_user
-      - POSTGRES_PASSWORD=usos_password
-      - POSTGRES_DB=usos_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
 volumes:
   postgres_data:
