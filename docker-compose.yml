@@ -36,9 +36,10 @@ services:
     volumes:
       - ./frontend/:/home/app
       - ./backend/dist:/home/backend/dist
+      - node_modules:/home/app/node_modules
     tty: true
     stdin_open: true
 
 volumes:
   postgres_data:
-  
+  node_modules:
