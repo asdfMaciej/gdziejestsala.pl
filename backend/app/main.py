@@ -1,17 +1,17 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.wsgi import WSGIMiddleware
+from fastapi.staticfiles import StaticFiles
 from . import models, crud, schemas, graph, admin
 
 from .database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
 
 
 app = FastAPI(title="USOS")
 
 
 @app.get(
-    "/points",
+    "/api/v1/points",
     response_model=schemas.PointsResponse,
     description="Returns a list of all available points.",
 )
@@ -23,7 +23,7 @@ def get_points(db: Session = Depends(get_db)):
 
 
 @app.get(
-    "/route/{start_point_id}/{destination_point_id}",
+    "/api/v1/route/{start_point_id}/{destination_point_id}",
     response_model=schemas.Path,
     responses={
         404: {"description": "Path not found"},
@@ -66,4 +66,5 @@ def get_route(
     return path
 
 
-app.mount("/admin", WSGIMiddleware(admin.flask_app))
+app.mount("/api/admin", WSGIMiddleware(admin.flask_app))
+app.mount("/", StaticFiles(directory="dist", html=True), name="dist")

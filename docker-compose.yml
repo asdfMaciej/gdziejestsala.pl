@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  web:
+  backend:
     build: ./backend
     ports:
       - "80:80"
@@ -20,12 +20,24 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    # expose:
+    # expose: # doesn't allow external db access
     #  - 5432
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:8000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BACKEND_URL=${BACKEND_URL}
+    volumes:
+      - ./frontend/:/home/app
+    tty: true
+    stdin_open: true
 
 volumes:
   postgres_data:
+  
