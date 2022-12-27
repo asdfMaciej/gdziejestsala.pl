@@ -7,7 +7,12 @@ from .database import SessionLocal, engine, get_db
 from sqlalchemy.orm import Session
 
 
-app = FastAPI(title="USOS")
+app = FastAPI(
+    title="USOS",
+    openapi_url="/api/v1/openapi.json",
+    redoc_url="/api/v1/redoc",
+    docs_url="/api/v1/docs",
+)
 
 
 @app.get(
@@ -66,5 +71,5 @@ def get_route(
     return path
 
 
-app.mount("/api/admin", WSGIMiddleware(admin.flask_app))
+app.mount("/api/v1/admin", WSGIMiddleware(admin.flask_app))
 app.mount("/", StaticFiles(directory="dist", html=True), name="dist")
