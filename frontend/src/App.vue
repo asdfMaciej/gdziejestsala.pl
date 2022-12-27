@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 </script>
 
 <template>
@@ -9,6 +11,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
+
+      BACKEND URL: {{BACKEND_URL}}
 
       <nav>
         <RouterLink to="/">Home</RouterLink>

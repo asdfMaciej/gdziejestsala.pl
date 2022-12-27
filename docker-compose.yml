@@ -32,9 +32,10 @@ services:
       - "8000:8000"
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - BACKEND_URL=${BACKEND_URL}
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     volumes:
       - ./frontend/:/home/app
+      - ./backend/dist:/home/backend/dist
     tty: true
     stdin_open: true
 
