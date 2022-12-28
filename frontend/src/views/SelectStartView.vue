@@ -1,6 +1,6 @@
 <template>
     <div class="about">
-        <h1>about application</h1>
+        <h1>select start view</h1>
     </div>
 </template>
   
