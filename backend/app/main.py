@@ -31,8 +31,8 @@ app.add_middleware(
 )
 def get_points(db: Session = Depends(get_db)):
     points = crud.get_points(db)
-    floors_by_id = crud.get_floors_by_id_for_points(db, points)
-    response = schemas.PointsResponse(points=points, floors=floors_by_id)
+    floors = crud.get_floors_for_points(db, points)
+    response = schemas.PointsResponse(points=points, floors=floors)
     return response
 
 
@@ -55,7 +55,7 @@ def get_route(
         path_point_ids = graph.get_path(
             pathfinding_edges, start_point_id, destination_point_id
         )
-    except AssertionError:
+    except ValueError:
         raise HTTPException(
             status_code=400, detail="Start and destination must be different"
         )
@@ -73,10 +73,10 @@ def get_route(
     path_points = sorted(path_points, key=lambda o: point_positions[o.id])
 
     # Retrieve floor details for present floors
-    floors_by_id = crud.get_floors_by_id_for_points(db, path_points)
+    floors = crud.get_floors_for_points(db, path_points)
 
     # Return the results
-    path = schemas.Path(path=path_points, floors=floors_by_id)
+    path = schemas.Path(path=path_points, floors=floors)
     return path
 
 

@@ -68,7 +68,7 @@ def get_floors_by_ids(db: Session, floors_id: list[int]) -> list[models.Floor]:
     return floors
 
 
-def get_floors_by_id_for_points(
+def get_floors_for_points(
     db: Session, points_list: list[models.Point]
 ) -> dict[int, models.Floor]:
     # Get unique floor IDs
@@ -80,9 +80,4 @@ def get_floors_by_id_for_points(
     # Fetch their data
     floors = get_floors_by_ids(db, list(floor_ids))
 
-    # Convert them to ID -> floor
-    floors_by_id = {}
-    for floor in floors:
-        floors_by_id[floor.id] = floor
-
-    return floors_by_id
+    return floors

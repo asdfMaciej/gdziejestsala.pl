@@ -109,11 +109,11 @@ PointNeighbour.update_forward_refs()
 # Non-DB models below
 class Path(BaseModel):
     path: list[PointNeighbour]
-    floors: dict[int, Floor]
+    floors: list[Floor]
 
 
 # Order-agnostic response
 # Same schema, but different semantics - hence the rename
 class PointsResponse(BaseModel):
     points: list[PointNeighbour]
-    floors: dict[int, Floor]
+    floors: list[Floor]
