@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { onMounted, computed } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
+import { usePointsStore } from './stores/points';
+
+const pointsStore = usePointsStore();
+onMounted(() => {
+  pointsStore.fetchPoints();
+});
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 </script>
@@ -22,6 +29,10 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
       </nav>
     </div>
   </header>
+
+  <div v-for="(point, point_id) in pointsStore.points">
+    {{ point }}
+  </div>
 
   <RouterView />
 </template>
