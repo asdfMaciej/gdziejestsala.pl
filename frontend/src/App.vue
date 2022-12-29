@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
-import { usePointsStore } from './stores/points';
+import { useDataStore } from './stores/data';
 
-const pointsStore = usePointsStore();
+const dataStore = useDataStore();
 onMounted(() => {
-  pointsStore.fetchPoints();
+  dataStore.fetchData();
 });
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      BACKEND URL: {{ BACKEND_URL }}
-
       <nav>
         <span>Debug menu:</span>
         <RouterLink :to="{ name: 'home' }">Home</RouterLink>
@@ -30,8 +27,12 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
     </div>
   </header>
 
-  <div v-for="(point, point_id) in pointsStore.points">
+  <div v-for="(point, point_id) in dataStore.points">
     {{ point }}
+  </div>
+
+  <div v-for="(floor, floor_id) in dataStore.floors">
+    {{ floor }}
   </div>
 
   <RouterView />
