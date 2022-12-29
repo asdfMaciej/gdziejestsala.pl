@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.wsgi import WSGIMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from . import models, crud, schemas, graph, admin
 
 from .database import SessionLocal, engine, get_db
@@ -12,6 +13,14 @@ app = FastAPI(
     openapi_url="/api/v1/openapi.json",
     redoc_url="/api/v1/redoc",
     docs_url="/api/v1/docs",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
