@@ -1,8 +1,5 @@
 import { defineStore } from 'pinia'
-// Import axios to make HTTP requests
-import axios from "axios"
-
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+import api from '../api/api';
 
 export const useDataStore = defineStore("user", {
     state: () => ({
@@ -12,9 +9,9 @@ export const useDataStore = defineStore("user", {
     actions: {
         async fetchData() {
             try {
-                const data = await axios.get(`${BACKEND_URL}/api/v1/points`);
-                this.points = data.data.points;
-                this.floors = data.data.floors;
+                const response = await api.getPoints();
+                this.points = response.points;
+                this.floors = response.floors;
             }
             catch (error) {
                 alert(error)
