@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { useDataStore } from '../stores/data';
-
-const dataStore = useDataStore();
-</script>
-
 <script lang="ts">
 export default {
   props: ['floors', 'points'],
