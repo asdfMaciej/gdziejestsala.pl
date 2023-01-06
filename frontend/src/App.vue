@@ -26,15 +26,6 @@ onMounted(() => {
       </nav>
     </div>
   </header>
-
-  <div v-for="(point, point_id) in dataStore.points">
-    {{ point }}
-  </div>
-
-  <div v-for="(floor, floor_id) in dataStore.floors">
-    {{ floor }}
-  </div>
-
   <RouterView />
 </template>
 

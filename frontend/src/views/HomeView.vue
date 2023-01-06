@@ -6,6 +6,6 @@
     <h2>Nie możesz znaleźć sali?</h2>
     <p>Zeskanuj nabliższy kod QR</p>
 
-    <RouterLink to="/about">Lub zaznacz gdzie jesteś na liście</RouterLink>
+    <RouterLink :to="{ name: 'select-start', params: {} }">Lub zaznacz gdzie jesteś na liście</RouterLink>
   </main>
 </template>

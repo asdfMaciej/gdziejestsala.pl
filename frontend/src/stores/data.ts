@@ -6,20 +6,15 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const useDataStore = defineStore("user", {
     state: () => ({
-        points: {},
-        floors: {}
+        points: [],
+        floors: []
     }),
     actions: {
         async fetchData() {
             try {
                 const data = await axios.get(`${BACKEND_URL}/api/v1/points`);
-                for (let point of data.data.points) {
-                    this.points[point.id] = point;
-                }
-
-                for (let floor of data.data.floors) {
-                    this.floors[floor.id] = floor;
-                }
+                this.points = data.data.points;
+                this.floors = data.data.floors;
             }
             catch (error) {
                 alert(error)

@@ -1,14 +1,61 @@
 <script setup lang="ts">
+import { useDataStore } from '../stores/data';
+
+const dataStore = useDataStore();
+</script>
+
+<script lang="ts">
+export default {
+  props: ['floors', 'points'],
+
+  methods: {
+    submit() {
+      if (!this.canSubmit) { return console.error("Invalid selection!"); }
+      this.$emit('selected', this.selectedPointId);
+    }
+  },
+
+  data() {
+    return {
+      selectedFloorId: null,
+      selectedPointId: null
+    };
+  },
+
+  computed: {
+    canSubmit() {
+      return !(this.selectedFloorId == null || this.selectedPointId == null);
+    },
+
+    selectedFloorPoints() {
+      const floorPointIsSelected = (floorPoint) => floorPoint.floor_id === this.selectedFloorId;
+      const pointHasSelectedFloor = (point) => point.floors.some(floorPointIsSelected);
+      return this.points.filter(pointHasSelectedFloor);
+    }
+  },
+
+  watch: {
+    selectedFloorId() {
+      this.selectedPointId = null;
+    }
+  }
+};
 </script>
 
 <template>
-  <div class="">
-    <h3>Select floor</h3>
-    <div>... list of floors ...</div>
-    <h3>Select point</h3>
-    <div>... list of points ...</div>
-    <button>Confirm</button>
-    <div>Boom! $emit a for example "select" event to the parent, with the selected point.</div>
+  <div>
+    <h3>Wybierz piętro</h3>
+    <select v-model="selectedFloorId">
+      <option :value="null">--</option>
+      <option v-for="floor of floors" :value="floor.id">{{ floor.name }}</option>
+    </select>
+    <h3>Wybierz punkt</h3>
+    <select v-model="selectedPointId">
+      <option :value="null">--</option>
+      <option v-for="point of selectedFloorPoints" :value="point.id">{{ point.name }}</option>
+    </select>
+    <br>
+    <button :disabled="!canSubmit" @click="submit">Zatwierdź</button>
   </div>
 </template>
 
