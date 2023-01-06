@@ -26,7 +26,11 @@ onMounted(() => {
       </nav>
     </div>
   </header>
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <keep-alive>
+      <component :is="Component" :key="$route.fullPath"></component>
+    </keep-alive>
+  </RouterView>
 </template>
 
 <style scoped>

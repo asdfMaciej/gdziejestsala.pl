@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import { useRouteStore } from '../stores/routes';
+import { computed, watch } from 'vue';
+import { createForLoopParams } from '@vue/compiler-core';
 
 const routeStore = useRouteStore();
 
 const route = useRoute();
-const startId = route.params.start_id;
-const destinationId = route.params.destination_id;
+const startId = computed(() => route.params.start_id);
+const destinationId = computed(() => route.params.destination_id);
 
-routeStore.fetchRoute(startId, destinationId);
+routeStore.fetchRoute(route.params.start_id, route.params.destination_id);
 </script>
 
 <template>

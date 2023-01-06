@@ -6,9 +6,9 @@ import { computed } from 'vue';
 const dataStore = useDataStore();
 
 const route = useRoute();
-const routePointId = route.params.point_id;
+const routePointId = computed(() => route.params.point_id);
 
-const point = computed(() => dataStore.points.find(point => point.id == routePointId));
+const point = computed(() => dataStore.points.find(point => point.id == route.params.point_id));
 const loading = computed(() => dataStore.points.length == 0);
 </script>
 

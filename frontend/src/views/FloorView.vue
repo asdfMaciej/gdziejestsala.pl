@@ -6,10 +6,9 @@ import { computed } from 'vue';
 const dataStore = useDataStore();
 
 const route = useRoute();
-const routeFloorId = route.params.floor_id;
+const routeFloorId = computed(() => route.params.floor_id);
 
-const floor = computed(() => dataStore.floors.find(floor => floor.id == routeFloorId));
-
+const floor = computed(() => dataStore.floors.find(floor => floor.id == route.params.floor_id));
 const loading = computed(() => dataStore.floors.length == 0);
 
 </script>
