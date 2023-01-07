@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useRouteStore } from '../stores/routes';
-import { computed, watch } from 'vue';
-import { createForLoopParams } from '@vue/compiler-core';
+import { computed } from 'vue';
+import RouteDetails from '@/components/RouteDetails.vue';
 
 const routeStore = useRouteStore();
 
@@ -17,12 +17,11 @@ routeStore.fetchRoute(route.params.start_id as string, route.params.destination_
 <template>
     <div class="about">
         <h1>route from {{ startId }} to {{ destinationId }} view</h1>
-
-        {{ routeStore.getRoute(startId, destinationId) }}
+        <RouteDetails v-if="routeStore.getRoute(startId, destinationId)"
+            :route="routeStore.getRoute(startId, destinationId)"></RouteDetails>
     </div>
 </template>
-  
+
 <style>
 
 </style>
-  
