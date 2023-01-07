@@ -5,7 +5,7 @@ import { useDataStore } from '../stores/data';
 
 const dataStore = useDataStore();
 
-const onSelectPoint = (pointId) => {
+const onSelectPoint = (pointId: number) => {
     router.push({
         name: 'select-destination', params: { 'start_id': pointId }
     });

@@ -8,7 +8,7 @@ const dataStore = useDataStore();
 const route = useRoute();
 const routeFloorId = computed(() => route.params.floor_id);
 
-const floor = computed(() => dataStore.floors.find(floor => floor.id == route.params.floor_id));
+const floor = computed(() => dataStore.floors.find(floor => floor.id === parseInt(route.params.floor_id as string, 10)));
 const loading = computed(() => dataStore.floors.length == 0);
 
 </script>

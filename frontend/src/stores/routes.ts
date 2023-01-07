@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia'
 import api from '../api/api';
+import type { Path } from '../api/models';
+
+interface RouteStore {
+    [id: string]: Path
+};
 
 export const useRouteStore = defineStore("routes", {
     state: () => ({
-        routes: {}
+        routes: {} as RouteStore
     }),
     actions: {
-        async fetchRoute(startId, destinationId) {
+        async fetchRoute(startId: number | string, destinationId: number | string) {
             try {
                 const response = await api.getRoute(startId, destinationId);
                 const id = startId + '|' + destinationId;
@@ -20,7 +25,7 @@ export const useRouteStore = defineStore("routes", {
     },
     getters: {
         getRoute: (state) => {
-            return (startId, destinationId) => state.routes[startId + '|' + destinationId];
+            return (startId: number | string, destinationId: number | string) => state.routes[startId + '|' + destinationId];
         }
     }
 })

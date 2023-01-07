@@ -8,7 +8,7 @@ const dataStore = useDataStore();
 const route = useRoute();
 const routePointId = computed(() => route.params.point_id);
 
-const point = computed(() => dataStore.points.find(point => point.id == route.params.point_id));
+const point = computed(() => dataStore.points.find(point => point.id === parseInt(route.params.point_id as string, 10)));
 const loading = computed(() => dataStore.points.length == 0);
 </script>
 

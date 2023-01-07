@@ -1,6 +1,19 @@
 <script lang="ts">
+import type { FloorPoint, Point, Floor } from "../api/models";
+import type { PropType } from 'vue';
+
+// TODO: Refactor to use the Composition API and type-based declaration (defineProps)
 export default {
-  props: ['floors', 'points'],
+  props: {
+    floors: {
+      type: Array as PropType<Floor[]>,
+      required: true
+    },
+    points: {
+      type: Array as PropType<Point[]>,
+      required: true
+    }
+  },
 
   methods: {
     submit() {
@@ -22,8 +35,8 @@ export default {
     },
 
     selectedFloorPoints() {
-      const floorPointIsSelected = (floorPoint) => floorPoint.floor_id === this.selectedFloorId;
-      const pointHasSelectedFloor = (point) => point.floors.some(floorPointIsSelected);
+      const floorPointIsSelected = (floorPoint: FloorPoint) => floorPoint.floor_id === this.selectedFloorId;
+      const pointHasSelectedFloor = (point: Point) => point.floors.some(floorPointIsSelected);
       return this.points.filter(pointHasSelectedFloor);
     }
   },

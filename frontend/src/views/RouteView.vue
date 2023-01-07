@@ -7,10 +7,11 @@ import { createForLoopParams } from '@vue/compiler-core';
 const routeStore = useRouteStore();
 
 const route = useRoute();
-const startId = computed(() => route.params.start_id);
-const destinationId = computed(() => route.params.destination_id);
+const startId = computed(() => route.params.start_id as string);
+const destinationId = computed(() => route.params.destination_id as string);
 
-routeStore.fetchRoute(route.params.start_id, route.params.destination_id);
+routeStore.fetchRoute(route.params.start_id as string, route.params.destination_id as string);
+
 </script>
 
 <template>

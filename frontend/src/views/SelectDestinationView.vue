@@ -9,7 +9,7 @@ const dataStore = useDataStore();
 const route = useRoute();
 const startId = route.params.start_id;
 
-const onSelectPoint = (pointId) => {
+const onSelectPoint = (pointId: number) => {
     router.push({
         name: 'view-route', params: { 'start_id': startId, 'destination_id': pointId }
     });
