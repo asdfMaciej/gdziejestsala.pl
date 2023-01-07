@@ -31,6 +31,11 @@ const router = createRouter({
       component: RouteView
     },
     {
+      path: '/route/:start_id/:destination_id/floor/:floor_id',
+      name: 'view-route-floor',
+      component: FloorView
+    },
+    {
       path: '/point/:point_id/',
       name: 'view-point',
       component: PointView

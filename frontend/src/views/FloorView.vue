@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
+import { useRouteStore } from '../stores/routes';
 import { computed } from 'vue';
+import FloorDetails from '@/components/FloorDetails.vue';
 
 const dataStore = useDataStore();
 
@@ -11,14 +13,25 @@ const routeFloorId = computed(() => route.params.floor_id);
 const floor = computed(() => dataStore.floors.find(floor => floor.id === parseInt(route.params.floor_id as string, 10)));
 const loading = computed(() => dataStore.floors.length == 0);
 
+const displayPathPoints = !(route.params.start_id == null);
+let path: any = null;
+
+if (displayPathPoints) {
+    const routeStore = useRouteStore();
+    routeStore.fetchRoute(route.params.start_id as string, route.params.destination_id as string);
+    path = computed(() => routeStore.getRoute(route.params.start_id as string, route.params.destination_id as string));
+}
+
+const header = computed(() => displayPathPoints ? 'Punkty na piętrze' : 'Szczegóły piętra');
+
 </script>
 
 <template>
     <div class="about">
-        <h1>floor #{{ routeFloorId }} details</h1>
+        <h1>{{ header }}</h1>
 
         <template v-if="floor">
-            {{ floor }}
+            <FloorDetails :floor="floor" :path="path"></FloorDetails>
         </template>
         <template v-else-if="loading">
             Ładowanie...
@@ -29,8 +42,7 @@ const loading = computed(() => dataStore.floors.length == 0);
 
     </div>
 </template>
-  
+
 <style>
 
 </style>
-  

@@ -17,8 +17,7 @@ routeStore.fetchRoute(route.params.start_id as string, route.params.destination_
 <template>
     <div class="about">
         <h1>route from {{ startId }} to {{ destinationId }} view</h1>
-        <RouteDetails v-if="routeStore.getRoute(startId, destinationId)"
-            :route="routeStore.getRoute(startId, destinationId)"></RouteDetails>
+        <RouteDetails :start-id="startId" :destination-id="destinationId"></RouteDetails>
     </div>
 </template>
 
