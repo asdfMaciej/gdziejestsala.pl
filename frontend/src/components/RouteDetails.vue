@@ -3,26 +3,16 @@ import type { Path } from '@/api/models';
 import { computed } from 'vue';
 import { routeToDisplay } from '@/helpers/route-display-helper';
 import { useDataStore } from '@/stores/data';
-import { useRouteStore } from '@/stores/routes';
 
 const props = defineProps<{
-    startId: string,
-    destinationId: string
+    route: Path | null
 }>();
 
-const routeStore = useRouteStore();
-
-let path = computed(() => {
-    const route = routeStore.getRoute(props.startId, props.destinationId);
-    if (!route)
-        return [];
-    return routeToDisplay(route, useDataStore());
-});
-
+let path = computed(() => routeToDisplay(props.route, useDataStore()));
 </script>
 
 <template>
-    <article v-if="path">
+    <article v-if="path.length">
         <template v-for="node in path">
             <div v-if="node.type === 'Point'">
                 {{ node.point.name }} ({{ node.point.description }})

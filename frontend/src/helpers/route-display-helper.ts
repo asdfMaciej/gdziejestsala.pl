@@ -1,4 +1,4 @@
-import type { Path, FloorPoint, Point, Floor } from '@/api/models';
+import type { Path, Point, Floor } from '@/api/models';
 
 interface PathPoint {
     type: 'Point',
@@ -10,7 +10,10 @@ interface PathFloor {
     floor: Floor
 }
 
-const routeToDisplay = (inputPath: Path, dataStore: any) => {
+const routeToDisplay = (inputPath: Path | null, dataStore: any) => {
+    if (inputPath == null)
+        return [];
+
     let path: Array<PathPoint | PathFloor> = [];
     let currentFloorId: number | null = null;
 
@@ -39,7 +42,6 @@ const routeToDisplay = (inputPath: Path, dataStore: any) => {
 
 const getRoutePointsOnFloor = (inputPath: Path) => {
     let result: { [floorId: number]: Point[] } = {};
-    let currentFloorId: number | null = null;
 
     for (let point of inputPath) {
         for (let floor of point.floors) {
@@ -55,3 +57,4 @@ const getRoutePointsOnFloor = (inputPath: Path) => {
 };
 
 export { routeToDisplay, getRoutePointsOnFloor };
+export type { PathPoint, PathFloor };
