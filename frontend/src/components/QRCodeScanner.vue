@@ -29,7 +29,17 @@ export default {
         },
 
         onDecode(result: any) {
-            this.result = result
+            this.result = result;
+
+            // Get capturing group for /route/(1234)/ with optional trailing slash
+            const route_regex = /.*\/route\/(\d+)\/?/;
+            const match = result.match(route_regex);
+            const matched_id = (match && match.length > 1) ? match[1] : null;
+
+            if (matched_id !== null) {
+                console.log(`matched ${matched_id}`);
+                this.$emit('match', matched_id);
+            }
         },
 
         async onInit(promise: any) {
