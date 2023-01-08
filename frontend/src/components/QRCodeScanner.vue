@@ -54,14 +54,12 @@ export default {
                     this.error = "ERROR: secure context required (HTTPS, localhost)"
                 } else if (error.name === 'NotReadableError') {
                     this.error = "ERROR: is the camera already in use?"
-                } else if (error.name === 'OverconstrainedError') {
-                    this.error = "ERROR: installed cameras are not suitable"
                 } else if (error.name === 'StreamApiNotSupportedError') {
                     this.error = "ERROR: Stream API is not supported in this browser"
                 } else if (error.name === 'InsecureContextError') {
                     this.error = 'ERROR: Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.';
                 } else {
-                    this.error = `ERROR: Camera error (${error.name})`;
+                    console.log(`ERROR: Camera error (${error.name})`);
                 }
 
                 const triedFrontCamera = this.camera === 'front'
@@ -75,6 +73,10 @@ export default {
 
                 if (triedFrontCamera && cameraMissingError) {
                     this.noFrontCamera = true
+                }
+
+                if (cameraMissingError) {
+                    this.switchCamera();
                 }
             }
         }
