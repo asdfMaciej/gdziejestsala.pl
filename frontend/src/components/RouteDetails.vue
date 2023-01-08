@@ -5,7 +5,9 @@ import { routeToDisplay } from '@/helpers/route-display-helper';
 import { useDataStore } from '@/stores/data';
 
 const props = defineProps<{
-    route: Path | null
+    route: Path | null,
+    startId: number | string,
+    destinationId: number | string
 }>();
 
 let path = computed(() => routeToDisplay(props.route, useDataStore()));
@@ -24,7 +26,10 @@ let path = computed(() => routeToDisplay(props.route, useDataStore()));
             <div v-else-if="node.type === 'Floor'">
                 Piętro {{ node.floor.name }}
 
-                <RouterLink :to="{ name: 'view-route-floor', params: { 'floor_id': node.floor.id } }">Floor details
+                startid {{ startId }} {{ destinationId }}
+
+                <RouterLink :to="{ name: 'view-route-floor', params: { 
+                    'floor_id': node.floor.id, 'start_id': startId, 'destination_id': destinationId } }">Floor details
                 </RouterLink>
             </div>
         </template>
