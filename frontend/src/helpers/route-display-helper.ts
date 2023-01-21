@@ -1,4 +1,4 @@
-import type { Path, Point, Floor } from '@/api/models';
+import type { Path, Point, Floor, FloorPoint } from '@/api/models';
 
 interface PathPoint {
     type: 'Point',
@@ -9,6 +9,11 @@ interface PathFloor {
     type: 'Floor',
     floor: Floor
 }
+
+interface FloorPointDetails {
+    floorPoint: FloorPoint,
+    point: Point
+};
 
 const routeToDisplay = (inputPath: Path | null, dataStore: any) => {
     if (inputPath == null)
@@ -40,16 +45,29 @@ const routeToDisplay = (inputPath: Path | null, dataStore: any) => {
     return path;
 };
 
-const getRoutePointsOnFloor = (inputPath: Path) => {
-    let result: { [floorId: number]: Point[] } = {};
+/**
+ * Lists <point, floorPoint> for each path point on a given floor.
+ * 
+ * FloorPoint stores point coordinates for a floor, Point stores its details.
+ * Uses a helper output type FloorPointDetails. 
+ * @param inputPath Path 
+ * @param floorId Floor ID
+ */
+const getRoutePointsOnFloor = (inputPath: Path, floorId: number): FloorPointDetails[] => {
+    let result: FloorPointDetails[] = [];
+
+    if (!inputPath)
+        return result;
 
     for (let point of inputPath) {
-        for (let floor of point.floors) {
-            if (!(floor.floor_id in result)) {
-                result[floor.floor_id] = [];
-            }
+        for (let floorPoint of point.floors) {
+            if (floorPoint.floor_id != floorId)
+                continue;
 
-            result[floor.floor_id].push(point);
+            result.push({
+                floorPoint: floorPoint,
+                point: point
+            });
         }
     }
 
@@ -57,4 +75,4 @@ const getRoutePointsOnFloor = (inputPath: Path) => {
 };
 
 export { routeToDisplay, getRoutePointsOnFloor };
-export type { PathPoint, PathFloor };
+export type { PathPoint, PathFloor, FloorPointDetails };
