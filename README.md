@@ -1,5 +1,7 @@
 # USOS
 
+[![Backend tests](https://github.com/USOS-WEB/backend/actions/workflows/test-backend.yml/badge.svg)](https://github.com/USOS-WEB/backend/actions/workflows/test-backend.yml)
+
 ### Running the project
 
 ```bash
