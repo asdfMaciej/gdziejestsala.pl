@@ -1,7 +1,8 @@
 version: "3.9"
 services:
-  backend:
+  usos-backend:
     build: ./backend
+    container_name: usos-backend
     ports:
       - "80:80"
     volumes:
