@@ -12,7 +12,7 @@ from app.main import app as main_app, get_db
 
 
 # Use a SQLite in-memory database for testing
-SQLALCHEMY_DATABASE_URL = "sqlite://" 
+SQLALCHEMY_DATABASE_URL = "sqlite://"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
@@ -22,12 +22,14 @@ engine = create_engine(
 def _fk_pragma_on_connect(dbapi_con, con_record):
     dbapi_con.execute("pragma foreign_keys=ON")
 
+
 event.listen(engine, "connect", _fk_pragma_on_connect)
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 """Below fixtures created by Tim Hughes under the MIT License:
 https://github.com/timhughes/example-fastapi-sqlachemy-pytest
 """
+
 
 @pytest.fixture(autouse=True)
 def app() -> Generator[FastAPI, Any, None]:
