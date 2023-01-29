@@ -114,5 +114,5 @@ def get_route(
 
 
 app.mount("/api/v1/admin", WSGIMiddleware(admin.flask_app))
-
+app.mount("/static/", StaticFiles(directory="static"), name="static")
 app.mount(path="/", app=SinglePageApplication(directory="dist"), name="SPA")
