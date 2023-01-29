@@ -24,7 +24,7 @@ jobs:
           -v "/$(pwd)/backend/dist:/home/backend/dist"
           --entrypoint="sh" -it frontend-img
       - name: Build frontend
-        run: docker exec -it --user node frontend-container npm run build
+        run: docker exec --user node frontend-container npm run build
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy backend to fly.io
         run: cd backend && flyctl deploy --remote-only
