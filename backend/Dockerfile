@@ -6,6 +6,7 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY . /app
 
-RUN mkdir /app/static && chown -R 1000:1000 /app/static
+RUN mkdir -p ./app/app/static 
+RUN chown -R 1000:1000 /app/app/static
 
 CMD ["/start-reload.sh"]
