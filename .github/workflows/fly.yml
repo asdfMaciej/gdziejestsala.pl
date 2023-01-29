@@ -1,31 +1,30 @@
 name: Fly.io deploy
-on:
-push:
+on: push
 branches:
   - develop
 env:
-FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 jobs:
-deploy:
-name: Deploy app
-runs-on: ubuntu-latest
-steps:
-  - uses: actions/checkout@v3
-  - name: Create backend dist directory
-    run: mkdir -p backend/dist && chmod 777 -R backend/dist
-  - name: Build frontend image
-    run: docker build -t frontend-img frontend
-  - name: Launch frontend container
-    run: > 
-      docker run
-      -d --name=frontend-container
-      -e VITE_BACKEND_URL=
-      -v "/$(pwd)/frontend/:/home/app"
-      -v "/$(pwd)/backend/dist:/home/backend/dist"
-      -v node_modules:/home/app/node_modules
-      --entrypoint="sh" -it frontend-img
-  - name: Build frontend
-    run: docker exec -it --user node frontend-container npm run build
-  - uses: superfly/flyctl-actions/setup-flyctl@master
-  - name: Deploy backend to fly.io
-    run: cd backend && flyctl deploy --remote-only
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create backend dist directory
+        run: mkdir -p backend/dist && chmod 777 -R backend/dist
+      - name: Build frontend image
+        run: docker build -t frontend-img frontend
+      - name: Launch frontend container
+        run: > 
+          docker run
+          -d --name=frontend-container
+          -e VITE_BACKEND_URL=
+          -v "/$(pwd)/frontend/:/home/app"
+          -v "/$(pwd)/backend/dist:/home/backend/dist"
+          -v node_modules:/home/app/node_modules
+          --entrypoint="sh" -it frontend-img
+      - name: Build frontend
+        run: docker exec -it --user node frontend-container npm run build
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy backend to fly.io
+        run: cd backend && flyctl deploy --remote-only
