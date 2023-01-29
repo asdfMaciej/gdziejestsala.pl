@@ -92,7 +92,7 @@ export default {
 
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
             <button @click="switchCamera">
-                <img src="/assets/camera-switch.svg" alt="switch camera"> <!-- TODO: proper assets link -->
+                <img src="/assets/camera-switch.svg" alt="switch camera" width="40"> <!-- TODO: proper assets link -->
             </button>
         </qrcode-stream>
     </div>

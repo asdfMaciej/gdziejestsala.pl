@@ -14,7 +14,7 @@ onMounted(() => {
   <header>
     <div class="wrapper">
       <nav>
-        <span>Debug menu:</span>
+        <span>Debug menu (CD test):</span>
         <RouterLink :to="{ name: 'home' }">Home</RouterLink>
         <RouterLink :to="{ name: 'select-start', params: {} }">Select start</RouterLink>
         <RouterLink :to="{ name: 'select-destination', params: { 'start_id': '1' } }">Select destination</RouterLink>
