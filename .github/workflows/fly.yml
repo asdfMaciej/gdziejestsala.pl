@@ -13,6 +13,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Create backend dist directory
         run: mkdir -p backend/dist && chmod 777 -R backend/dist
+      - name: Create node_modules volume
+        run: docker volume create node_modules
       - name: Build frontend image
         run: docker build -t frontend-img frontend
       - name: Launch frontend container
@@ -22,9 +24,10 @@ jobs:
           -e VITE_BACKEND_URL=
           -v "/$(pwd)/frontend/:/home/app"
           -v "/$(pwd)/backend/dist:/home/backend/dist"
+          -v node_modules:/home/app/node_modules
           --entrypoint="sh" -it frontend-img
       - name: Build frontend
-        run: docker exec --user node frontend-container npm run build
+        run: docker exec --user node frontend-container sh -c 'npm install ; npm run build'
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy backend to fly.io
         run: cd backend && flyctl deploy --remote-only
