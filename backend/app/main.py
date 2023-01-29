@@ -113,6 +113,8 @@ def get_route(
     return path
 
 
+static_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "static"))
+
 app.mount("/api/v1/admin", WSGIMiddleware(admin.flask_app))
-app.mount("/static/", StaticFiles(directory="static"), name="static")
+app.mount("/static/", StaticFiles(directory=static_path), name="static")
 app.mount(path="/", app=SinglePageApplication(directory="dist"), name="SPA")
