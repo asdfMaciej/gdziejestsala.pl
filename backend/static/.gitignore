@@ -1,0 +1,4 @@
+# Ignores everything except for .gitignore
+# Preserves the directory in the repo
+*
+!.gitignore

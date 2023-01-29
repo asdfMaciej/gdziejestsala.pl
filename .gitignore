@@ -2,5 +2,4 @@
 **/sql_app.db
 .env
 backend/dist
-backend/static
 .vscode
