@@ -27,7 +27,7 @@ jobs:
           -v node_modules:/home/app/node_modules
           --entrypoint="sh" -it frontend-img
       - name: Build frontend
-        run: docker exec --user node frontend-container sh -c 'npm install ; npm run build'
+        run: docker exec --user node frontend-container npm run build
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy backend to fly.io
         run: cd backend && flyctl deploy --remote-only
