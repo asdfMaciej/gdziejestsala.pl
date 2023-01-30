@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, inject } from 'vue';
 import { RouterLink, RouterView } from 'vue-router'
 import { useDataStore } from './stores/data';
 
@@ -8,6 +8,7 @@ onMounted(() => {
   dataStore.fetchData();
 });
 
+const $debug = inject('$debug');
 </script>
 
 <template>
