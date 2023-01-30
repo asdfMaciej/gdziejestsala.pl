@@ -31,10 +31,13 @@ export default {
 
   computed: {
     canSubmit() {
-      return !(this.selectedFloorId == null || this.selectedPointId == null);
+      return !(this.selectedPointId == null);
     },
 
     selectedFloorPoints() {
+      if (this.selectedFloorId == null)
+        return this.points;
+
       const floorPointIsSelected = (floorPoint: FloorPoint) => floorPoint.floor_id === this.selectedFloorId;
       const pointHasSelectedFloor = (point: Point) => point.floors.some(floorPointIsSelected);
       return this.points.filter(pointHasSelectedFloor);
