@@ -35,6 +35,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING=true
       - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+      - VITE_DEBUG=${VITE_DEBUG}
     volumes:
       - ./frontend/:/home/app
       - ./backend/dist:/home/backend/dist

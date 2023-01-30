@@ -13,7 +13,7 @@ onMounted(() => {
 <template>
   <header>
     <div class="wrapper">
-      <nav>
+      <nav v-if="$debug">
         <span>Debug menu (CD test):</span>
         <RouterLink :to="{ name: 'home' }">Home</RouterLink>
         <RouterLink :to="{ name: 'select-start', params: {} }">Select start</RouterLink>
