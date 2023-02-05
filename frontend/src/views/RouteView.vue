@@ -38,11 +38,24 @@ const log = console.log;
 <template>
     <section class="about">
         <h1>Trasa od {{ startName }} do {{ destinationName }}</h1>
+        <p class="caption">Naciśnij na nazwę aby zobaczyć szczegóły budynku lub miejsca.</p>
         <RouteDetails @click="log(route.params)" :start-id="startId" :destination-id="destinationId"
             :route="(path as Path)"></RouteDetails>
     </section>
 </template>
 
-<style>
+<style scoped lang="scss">
+section.about {
+    h1 {
+        margin-bottom: 0.5em;
+    }
 
+    .caption {
+        margin-bottom: 1.5em;
+    }
+}
+
+.caption {
+    color: var(--hex-lightgrey);
+}
 </style>

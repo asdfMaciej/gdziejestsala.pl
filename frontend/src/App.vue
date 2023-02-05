@@ -26,7 +26,7 @@ const $debug = inject('$debug');
     </nav>
 
     <RouterLink :to="{ name: 'home' }" class="header__logo">
-      gdziejestsala.pl
+      Gdzie jest sala?
     </RouterLink>
     <nav class="header__nav">
 
