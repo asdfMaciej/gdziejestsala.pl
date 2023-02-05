@@ -13,13 +13,13 @@ const onSelectPoint = (pointId: number) => {
 
 </script>
 <template>
-    <div class="about">
-        <h1>select start view</h1>
+    <section class="about">
+        <h1>Wybierz punkt początkowy</h1>
 
         <PointSelect :floors="dataStore.floors" :points="dataStore.points" @selected="onSelectPoint" />
 
         <RouterLink :to="{ name: 'scan-qr', params: {} }">Lub zeskanuj najbliższy kod QR</RouterLink>
-    </div>
+    </section>
 </template>
 
 <style>

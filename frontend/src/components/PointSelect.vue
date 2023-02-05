@@ -53,22 +53,32 @@ export default {
 </script>
 
 <template>
-  <div>
-    <h3>Wybierz piętro</h3>
+  <article>
+    <h3>Filtruj po piętrze</h3>
     <select v-model="selectedFloorId">
       <option :value="null">--</option>
       <option v-for="floor of floors" :value="floor.id">{{ floor.name }}</option>
     </select>
-    <h3>Wybierz punkt</h3>
+
+    <h2>Wybierz punkt</h2>
     <select v-model="selectedPointId">
       <option :value="null">--</option>
       <option v-for="point of selectedFloorPoints" :value="point.id">{{ point.name }}</option>
     </select>
-    <br>
+
     <button :disabled="!canSubmit" @click="submit">Zatwierdź</button>
-  </div>
+  </article>
 </template>
 
 <style scoped>
-
+input,
+select {
+  display: block;
+  width: 100%;
+  height: 2rem;
+  margin: 0 0 1rem;
+  background: var(--hex-white);
+  color: var(--hex-black);
+  border: 2px solid var(--hex-black);
+}
 </style>

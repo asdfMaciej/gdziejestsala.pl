@@ -24,7 +24,10 @@ const $debug = inject('$debug');
       <RouterLink :to="{ name: 'view-floor', params: { 'floor_id': '1' } }">Floor details</RouterLink>
       <RouterLink :to="{ name: 'about' }">About application</RouterLink>
     </nav>
-    <span class="header__logo">gdziejestsala.pl</span>
+
+    <RouterLink :to="{ name: 'home' }" class="header__logo">
+      gdziejestsala.pl
+    </RouterLink>
     <nav class="header__nav">
 
     </nav>
@@ -46,6 +49,8 @@ const $debug = inject('$debug');
 
   &__logo {
     font-weight: bold;
+    text-decoration: none;
+    color: var(--hex-white);
   }
 }
 

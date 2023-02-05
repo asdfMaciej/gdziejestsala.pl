@@ -1,10 +1,9 @@
 <template>
-    <div class="about">
+    <section class="about">
         <h1>about application</h1>
-    </div>
+    </section>
 </template>
-  
+
 <style>
 
 </style>
-  

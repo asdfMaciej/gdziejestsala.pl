@@ -11,12 +11,12 @@ const onMatch = (pointId: string | number) => {
 </script>
 
 <template>
-    <main>
+    <section>
         <h2>Zeskanuj nabliższy kod QR</h2>
 
         <QRCodeScanner @match="onMatch"></QRCodeScanner>
 
         <RouterLink :to="{ name: 'select-start', params: {} }">Lub wybierz punkt początkowy
         </RouterLink>
-    </main>
+    </section>
 </template>

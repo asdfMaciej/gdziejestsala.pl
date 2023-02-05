@@ -24,12 +24,12 @@ if (displayPathPoints) {
     });
 }
 
-const header = computed(() => displayPathPoints ? 'Punkty na piętrze' : 'Szczegóły piętra');
+const header = computed(() => displayPathPoints ? 'Szczegóły piętra' : 'Szczegóły piętra');
 
 </script>
 
 <template>
-    <div class="about">
+    <section class="about">
         <h1>{{ header }}</h1>
 
         <template v-if="floor">
@@ -42,7 +42,7 @@ const header = computed(() => displayPathPoints ? 'Punkty na piętrze' : 'Szczeg
             Nie znaleziono piętra!
         </template>
 
-    </div>
+    </section>
 </template>
 
 <style>
