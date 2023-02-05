@@ -8,6 +8,19 @@ Edge = ForwardRef("Edge")
 FloorPoint = ForwardRef("FloorPoint")
 
 
+class ImageBase(BaseModel):
+    url: str
+    width: int
+    height: int
+
+    class Config:
+        orm_mode = True
+
+
+class Image(ImageBase):
+    id: int
+
+
 class EdgeBase(BaseModel):
     from_point_id: int
     to_point_id: int
@@ -34,24 +47,12 @@ class PointBase(BaseModel):
 class PointNeighbour(PointBase):
     id: int
     floors: list[FloorPointWithFloor]
+    images: list[ImageBase]
 
 
 class Point(PointNeighbour):
     connected_from: list[Edge]
     connected_to: list[Edge]
-
-
-class ImageBase(BaseModel):
-    url: str
-    width: int
-    height: int
-
-    class Config:
-        orm_mode = True
-
-
-class Image(ImageBase):
-    id: int
 
 
 class FloorBase(BaseModel):

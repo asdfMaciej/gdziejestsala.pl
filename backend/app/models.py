@@ -12,6 +12,7 @@ class Point(Base):
     is_classroom = Column(Boolean, nullable=False)
 
     floors = relationship("FloorPoint", back_populates="point")
+    images = relationship("Image", secondary="point_images")
 
     def __str__(self):
         return f"<{self.id}> {self.name}"
@@ -39,6 +40,16 @@ class Image(Base):
     url = Column(String(256), nullable=False)
     width = Column(Integer, nullable=False)
     height = Column(Integer, nullable=False)
+
+
+class PointImage(Base):
+    __tablename__ = "point_images"
+
+    point_id = Column(Integer, ForeignKey("points.id"), primary_key=True)
+    image_id = Column(Integer, ForeignKey("images.id"), primary_key=True)
+
+    point = relationship(Point, primaryjoin=point_id == Point.id)
+    image = relationship(Image, primaryjoin=image_id == Image.id)
 
 
 class Floor(Base):
