@@ -14,28 +14,47 @@ let path = computed(() => routeToDisplay(props.route, useDataStore()));
 </script>
 
 <template>
-    <article v-if="path.length">
+    <dl v-if="path.length" class="route-details">
         <template v-for="node in path">
-            <div v-if="node.type === 'Point'">
-                {{ node.point.name }} ({{ node.point.description }})
-                <br>
-
-                <RouterLink :to="{ name: 'view-point', params: { 'point_id': node.point.id } }">Point details
+            <dt v-if="node.type === 'Point'">
+                <RouterLink :to="{ name: 'view-point', params: { 'point_id': node.point.id } }">{{ node.point.name }}
                 </RouterLink>
-            </div>
-            <div v-else-if="node.type === 'Floor'">
-                Piętro {{ node.floor.name }}
+            </dt>
+            <dd v-else-if="node.type === 'Floor'">
 
-                startid {{ startId }} {{ destinationId }}
 
-                <RouterLink :to="{ name: 'view-route-floor', params: { 
-                    'floor_id': node.floor.id, 'start_id': startId, 'destination_id': destinationId } }">Floor details
+                <RouterLink :to="{
+                    name: 'view-route-floor', params: {
+                        'floor_id': node.floor.id, 'start_id': startId, 'destination_id': destinationId
+                    }
+                }">
+                    <h3>🏢 {{ node.floor.name }}</h3>
                 </RouterLink>
-            </div>
+            </dd>
         </template>
-    </article>
+    </dl>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+.route-details {
+    a {
+        color: var(--hex-black);
+    }
+}
 
+dt {
+    margin: 10px 0;
+}
+
+dd {
+    margin: 15px 0 10px;
+}
+
+dd:first-child {
+    margin-top: 0;
+}
+
+dt:last-child {
+    margin-bottom: 0;
+}
 </style>

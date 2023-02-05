@@ -13,22 +13,26 @@ const loading = computed(() => dataStore.points.length == 0);
 </script>
 
 <template>
-    <div class="about">
-        <h1>point #{{ routePointId }} details</h1>
-
+    <section class="about">
         <template v-if="point">
-            {{ point }}
+            <h1>{{ point.name }}</h1>
+            <p>{{ point.description }}</p>
+            <!-- todo: image -->
+
+            <h3 v-if="point.floors.length">Piętro:</h3>
+            <ul>
+                <li v-for="floor in point.floors">{{ floor }}</li>
+            </ul>
         </template>
         <template v-else-if="loading">
-            Ładowanie...
+            <h1>Ładowanie miejsca {{ routePointId }}...</h1>
         </template>
         <template v-else>
-            Nie znaleziono miejsca!
+            <h1>Nie znaleziono miejsca {{ routePointId }}!</h1>
         </template>
-    </div>
+    </section>
 </template>
-  
+
 <style>
 
 </style>
-  

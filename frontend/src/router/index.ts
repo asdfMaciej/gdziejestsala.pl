@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SelectStartView from '../views/SelectStartView.vue'
-import SelectDestinationView from '../views/SelectDestinationView.vue'
-import RouteView from '../views/RouteView.vue'
-import PointView from '../views/PointView.vue'
-import AboutView from '../views/AboutView.vue'
-import FloorView from '../views/FloorView.vue'
+import HomeView from '@/views/HomeView.vue'
+import SelectStartView from '@/views/SelectStartView.vue'
+import SelectDestinationView from '@/views/SelectDestinationView.vue'
+import RouteView from '@/views/RouteView.vue'
+import PointView from '@/views/PointView.vue'
+import AboutView from '@/views/AboutView.vue'
+import FloorView from '@/views/FloorView.vue'
+import ScanQRView from '@/views/ScanQRView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/route/',
       name: 'select-start',
       component: SelectStartView
+    },
+    {
+      path: '/scan-qr/',
+      name: 'scan-qr',
+      component: ScanQRView
     },
     {
       path: '/route/:start_id/',
@@ -53,4 +59,4 @@ const router = createRouter({
   ]
 })
 
-export default router
+export default router;

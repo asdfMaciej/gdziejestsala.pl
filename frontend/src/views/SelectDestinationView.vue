@@ -3,11 +3,19 @@ import PointSelect from "../components/PointSelect.vue";
 import router from '../router/index';
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
+import { computed } from "vue";
 
 const dataStore = useDataStore();
 
 const route = useRoute();
 const startId = route.params.start_id;
+
+const pointName = computed(() =>
+    dataStore.points
+        .filter(p => p.id == startId as unknown as number)
+        .map(x => x.name)
+        .find(() => true) || startId
+);
 
 const onSelectPoint = (pointId: number) => {
     router.push({
@@ -19,14 +27,14 @@ const onSelectPoint = (pointId: number) => {
 </script>
 
 <template>
-    <div class="about">
-        <h1>route from {{ startId }} - select destination view</h1>
+    <section class="about">
+        <h1>Trasa z {{ pointName }}
+            - wybierz punkt docelowy</h1>
 
         <PointSelect :floors="dataStore.floors" :points="dataStore.points" @selected="onSelectPoint" />
-    </div>
+    </section>
 </template>
-  
+
 <style>
 
 </style>
-  

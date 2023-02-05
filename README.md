@@ -37,7 +37,7 @@ See respective backend and frontend directories' README for more detailed instru
 Install npm and Python 3.10 on the host machine.
 Run ```npm ci``` in the frontend directory - installed node-modules will enable linting in VS Code and remove Typescript errors.
 
-Run ```pip install -g requirements-dev.txt``` in the backend directory - it will install black (a code formatter), pigar (a tool for generating requirements.txt), and pre-commit (a tool for pre-commit hooks). 
+Run ```pip install requirements-dev.txt``` in the backend directory - it will install black (a code formatter), pigar (a tool for generating requirements.txt), and pre-commit (a tool for pre-commit hooks). 
 
 Install required extensions in VS Code (Python, Vue, Typescript, ...).
 
@@ -47,7 +47,7 @@ Configure [Takeover Mode](https://vuejs.org/guide/typescript/overview.html#ide-s
 
 Lastly, run ```pre-commit install``` in the root directory to install pre-commit hooks. 
 
-Note: this setup isn't ideal, as it relies on the host machine doesn't utilize dev containers VS Code functionality. 
+Note: this setup isn't ideal, as it relies on the host machine. It could utilize dev containers VS Code functionality. 
 
 #### Building the frontend
 
@@ -86,5 +86,5 @@ flyctl deploy
 If you want to hook the project to a custom domain, you should generate a certificate using flyctl.
 
 ### Style guide 
-- Commits should be in present-tense, imperative style
+Commits should be in present-tense, imperative style.
 
