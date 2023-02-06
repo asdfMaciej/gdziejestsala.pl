@@ -1,6 +1,6 @@
 <template>
     <section class="about">
-        <h1>about application</h1>
+        <h1>O aplikacji</h1>
     </section>
 </template>
 

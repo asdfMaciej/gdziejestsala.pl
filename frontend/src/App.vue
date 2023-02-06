@@ -26,7 +26,7 @@ const $debug = inject('$debug');
     </nav>
 
     <RouterLink :to="{ name: 'home' }" class="header__logo">
-      gdziejestsala.pl
+      Gdzie jest sala?
     </RouterLink>
     <nav class="header__nav">
 
@@ -57,5 +57,7 @@ const $debug = inject('$debug');
 main {
   padding: 20px var(--px-container-padding);
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>

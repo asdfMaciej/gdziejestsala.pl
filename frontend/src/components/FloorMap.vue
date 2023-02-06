@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import type { Floor, Path } from '@/api/models';
+import type { Floor, Point } from '@/api/models';
 import type { FloorPointDetails } from '@/helpers/route-display-helper';
 import { computed, watch, ref, onMounted, nextTick } from 'vue';
 import { getRoutePointsOnFloor } from '@/helpers/route-display-helper';
 
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     floor: Floor,
-    path: Path | null
-}>();
+    points: Point[] | null,
+    displayPointsList?: boolean
+}>(), {
+    displayPointsList: true
+});
 
-const showPath = computed(() => !(props.path == null));
-const floorPoints = computed(() => getRoutePointsOnFloor(props.path as Path, props.floor.id));
+const showPath = computed(() => !(props.points == null));
+const floorPoints = computed(() => getRoutePointsOnFloor(props.points as Point[], props.floor.id));
 
 // Stores a reference to the HTML5 canvas element
 const canvasRef: any = ref(null);
@@ -19,30 +22,47 @@ const canvasRef: any = ref(null);
 const drawPointsOnCanvas = (pointsOnFloor: FloorPointDetails[]) => {
     const canvas = canvasRef.value;
     const ctx = canvas.getContext("2d");
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!pointsOnFloor)
         return;
 
+    let no = 1;
     for (const { floorPoint, point } of pointsOnFloor) {
         const x = floorPoint.x;
         const y = floorPoint.y;
         if (x && y) {
-            drawCircle(ctx, x, y);
+            drawCircle(ctx, x, y, no);
         }
+        no += 1;
     }
 }
 
-const drawCircle = (ctx: any, x: any, y: any) => {
+const drawCircle = (ctx: any, x: any, y: any, no: number) => {
+    const colors = [
+        // border, inside, text
+        ["#ff0000", "#ff0000", "#ffffff"],
+        ["#0000ff", "#0000ff", "#ffffff"]
+    ];
+
+    const color = colors[no % 2];
+
     ctx.beginPath();
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = color[0];
     ctx.arc(x, y, 25, 0, 2 * Math.PI, 0);
     ctx.fill();
 
     ctx.beginPath();
-    ctx.fillStyle = "#000000";
-    ctx.arc(x, y, 15, 0, 2 * Math.PI, 0);
+    ctx.fillStyle = color[1];
+    ctx.arc(x, y, 22, 0, 2 * Math.PI, 0);
     ctx.fill();
+
+    ctx.fillStyle = color[2];
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(no, x, y);
 }
 
 onMounted(() => {
@@ -60,18 +80,21 @@ onMounted(() => {
 
 <template>
     <article>
-        <h1>{{ floor.name }}</h1>
-        <p>{{ floor.description }}</p>
+
         <div class="floor-image">
             <img v-if="floor.map_image" :src="floor.map_image.url">
             <canvas v-if="floor.map_image" :width="floor.map_image.width" :height="floor.map_image.height"
                 ref="canvasRef"></canvas>
         </div>
 
-        <template v-if="showPath">
+        <template v-if="showPath && displayPointsList">
             <h2>Punkty na piętrze:</h2>
             <ol>
-                <li v-for="point in floorPoints">{{ point.point.name }}</li>
+                <li v-for="point in floorPoints">
+                    <RouterLink :to="{ name: 'view-point', params: { 'point_id': point.point.id } }">{{
+                        point.point.name
+                    }}</RouterLink>
+                </li>
             </ol>
         </template>
     </article>

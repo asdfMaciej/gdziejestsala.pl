@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { useDataStore } from '../stores/data';
-import { useRouteStore } from '../stores/routes';
+import { useDataStore } from '@/stores/data';
+import { useRouteStore } from '@/stores/routes';
 import { computed, ref } from 'vue';
-import FloorDetails from '@/components/FloorDetails.vue';
+import FloorMap from '@/components/FloorMap.vue';
+import BackButton from '@/components/BackButton.vue';
 import type { Path } from '@/api/models';
 
 const dataStore = useDataStore();
@@ -26,6 +27,7 @@ if (displayPathPoints) {
 
 const header = computed(() => displayPathPoints ? 'Szczegóły piętra' : 'Szczegóły piętra');
 
+
 </script>
 
 <template>
@@ -33,7 +35,9 @@ const header = computed(() => displayPathPoints ? 'Szczegóły piętra' : 'Szcze
         <h1>{{ header }}</h1>
 
         <template v-if="floor">
-            <FloorDetails :floor="floor" :path="path"></FloorDetails>
+            <h1>{{ floor.name }}</h1>
+            <p>{{ floor.description }}</p>
+            <FloorMap :floor="floor" :points="path"></FloorMap>
         </template>
         <template v-else-if="loading">
             Ładowanie...
@@ -41,10 +45,12 @@ const header = computed(() => displayPathPoints ? 'Szczegóły piętra' : 'Szcze
         <template v-else>
             Nie znaleziono piętra!
         </template>
-
     </section>
+    <BackButton />
 </template>
 
-<style>
-
+<style scoped>
+section {
+    flex: 1;
+}
 </style>

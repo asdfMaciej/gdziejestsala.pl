@@ -88,7 +88,7 @@ export default {
     <div>
         <p class="error">{{ error }}</p>
 
-        <p class="decode-result">Last result: <b>{{ result }}</b></p>
+        <p class="decode-result"></p>
 
         <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
             <button @click="switchCamera">
@@ -109,5 +109,8 @@ button {
     position: absolute;
     left: 10px;
     top: 10px;
+    background: none;
+    border: none;
+    width: auto;
 }
 </style>

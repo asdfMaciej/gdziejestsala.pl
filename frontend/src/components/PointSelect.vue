@@ -71,14 +71,5 @@ export default {
 </template>
 
 <style scoped>
-input,
-select {
-  display: block;
-  width: 100%;
-  height: 2rem;
-  margin: 0 0 1rem;
-  background: var(--hex-white);
-  color: var(--hex-black);
-  border: 2px solid var(--hex-black);
-}
+
 </style>

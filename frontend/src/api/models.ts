@@ -3,7 +3,8 @@ interface Point {
     description: string,
     is_classroom: boolean,
     id: number,
-    floors: FloorPoint[]
+    floors: FloorPoint[],
+    images: Image[]
 };
 
 interface FloorPoint {
