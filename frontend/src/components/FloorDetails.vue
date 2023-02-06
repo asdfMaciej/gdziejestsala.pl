@@ -19,30 +19,47 @@ const canvasRef: any = ref(null);
 const drawPointsOnCanvas = (pointsOnFloor: FloorPointDetails[]) => {
     const canvas = canvasRef.value;
     const ctx = canvas.getContext("2d");
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!pointsOnFloor)
         return;
 
+    let no = 1;
     for (const { floorPoint, point } of pointsOnFloor) {
         const x = floorPoint.x;
         const y = floorPoint.y;
         if (x && y) {
-            drawCircle(ctx, x, y);
+            drawCircle(ctx, x, y, no);
         }
+        no += 1;
     }
 }
 
-const drawCircle = (ctx: any, x: any, y: any) => {
+const drawCircle = (ctx: any, x: any, y: any, no: number) => {
+    const colors = [
+        // border, inside, text
+        ["#ff0000", "#ff0000", "#ffffff"],
+        ["#0000ff", "#0000ff", "#ffffff"]
+    ];
+
+    const color = colors[no % 2];
+
     ctx.beginPath();
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = color[0];
     ctx.arc(x, y, 25, 0, 2 * Math.PI, 0);
     ctx.fill();
 
     ctx.beginPath();
-    ctx.fillStyle = "#000000";
-    ctx.arc(x, y, 15, 0, 2 * Math.PI, 0);
+    ctx.fillStyle = color[1];
+    ctx.arc(x, y, 22, 0, 2 * Math.PI, 0);
     ctx.fill();
+
+    ctx.fillStyle = color[2];
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText(no, x, y);
 }
 
 onMounted(() => {
