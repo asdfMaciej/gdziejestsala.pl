@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
 import { computed } from 'vue';
+import Gallery from '@/components/Gallery.vue';
 
 const dataStore = useDataStore();
 
@@ -17,7 +18,8 @@ const loading = computed(() => dataStore.points.length == 0);
         <template v-if="point">
             <h1>{{ point.name }}</h1>
             <p>{{ point.description }}</p>
-            <!-- todo: image -->
+
+            <Gallery :images="point.images"></Gallery>
 
             <h3 v-if="point.floors.length">Piętro:</h3>
             <ul>
