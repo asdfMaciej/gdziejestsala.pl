@@ -5,10 +5,13 @@ import { computed, watch, ref, onMounted, nextTick } from 'vue';
 import { getRoutePointsOnFloor } from '@/helpers/route-display-helper';
 
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
     floor: Floor,
-    points: Point[] | null
-}>();
+    points: Point[] | null,
+    displayPointsList?: boolean
+}>(), {
+    displayPointsList: true
+});
 
 const showPath = computed(() => !(props.points == null));
 const floorPoints = computed(() => getRoutePointsOnFloor(props.points as Point[], props.floor.id));
@@ -84,7 +87,7 @@ onMounted(() => {
                 ref="canvasRef"></canvas>
         </div>
 
-        <template v-if="showPath">
+        <template v-if="showPath && displayPointsList">
             <h2>Punkty na piętrze:</h2>
             <ol>
                 <li v-for="point in floorPoints">
