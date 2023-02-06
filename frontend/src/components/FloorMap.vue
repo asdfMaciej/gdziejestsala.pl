@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Floor, Path } from '@/api/models';
+import type { Floor, Point } from '@/api/models';
 import type { FloorPointDetails } from '@/helpers/route-display-helper';
 import { computed, watch, ref, onMounted, nextTick } from 'vue';
 import { getRoutePointsOnFloor } from '@/helpers/route-display-helper';
@@ -7,11 +7,11 @@ import { getRoutePointsOnFloor } from '@/helpers/route-display-helper';
 
 const props = defineProps<{
     floor: Floor,
-    path: Path | null
+    points: Point[] | null
 }>();
 
-const showPath = computed(() => !(props.path == null));
-const floorPoints = computed(() => getRoutePointsOnFloor(props.path as Path, props.floor.id));
+const showPath = computed(() => !(props.points == null));
+const floorPoints = computed(() => getRoutePointsOnFloor(props.points as Point[], props.floor.id));
 
 // Stores a reference to the HTML5 canvas element
 const canvasRef: any = ref(null);
@@ -77,8 +77,7 @@ onMounted(() => {
 
 <template>
     <article>
-        <h1>{{ floor.name }}</h1>
-        <p>{{ floor.description }}</p>
+
         <div class="floor-image">
             <img v-if="floor.map_image" :src="floor.map_image.url">
             <canvas v-if="floor.map_image" :width="floor.map_image.width" :height="floor.map_image.height"
@@ -88,7 +87,11 @@ onMounted(() => {
         <template v-if="showPath">
             <h2>Punkty na piętrze:</h2>
             <ol>
-                <li v-for="point in floorPoints">{{ point.point.name }}</li>
+                <li v-for="point in floorPoints">
+                    <RouterLink :to="{ name: 'view-point', params: { 'point_id': point.point.id } }">{{
+                        point.point.name
+                    }}</RouterLink>
+                </li>
             </ol>
         </template>
     </article>
