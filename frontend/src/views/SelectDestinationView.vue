@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PointSelect from "../components/PointSelect.vue";
+import BackButton from "@/components/BackButton.vue";
 import router from '../router/index';
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
@@ -33,8 +34,11 @@ const onSelectPoint = (pointId: number) => {
 
         <PointSelect :floors="dataStore.floors" :points="dataStore.points" @selected="onSelectPoint" />
     </section>
+    <BackButton />
 </template>
 
-<style>
-
+<style scoped>
+section {
+    flex: 1;
+}
 </style>

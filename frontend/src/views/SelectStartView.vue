@@ -18,10 +18,14 @@ const onSelectPoint = (pointId: number) => {
 
         <PointSelect :floors="dataStore.floors" :points="dataStore.points" @selected="onSelectPoint" />
 
-        <RouterLink :to="{ name: 'scan-qr', params: {} }">Lub zeskanuj najbliższy kod QR</RouterLink>
+        <RouterLink class="alternative" :to="{ name: 'scan-qr', params: {} }">...lub zeskanuj najbliższy kod QR
+        </RouterLink>
     </section>
 </template>
 
-<style>
-
+<style scoped>
+.alternative {
+    display: block;
+    margin-top: 20px;
+}
 </style>

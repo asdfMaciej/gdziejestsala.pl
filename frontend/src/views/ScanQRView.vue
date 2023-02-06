@@ -16,7 +16,15 @@ const onMatch = (pointId: string | number) => {
 
         <QRCodeScanner @match="onMatch"></QRCodeScanner>
 
-        <RouterLink :to="{ name: 'select-start', params: {} }">Lub wybierz punkt początkowy
+        <RouterLink class="alternative" :to="{ name: 'select-start', params: {} }">...lub wybierz punkt początkowy z
+            listy
         </RouterLink>
     </section>
 </template>
+
+<style scoped>
+.alternative {
+    display: block;
+    margin-top: 20px;
+}
+</style>

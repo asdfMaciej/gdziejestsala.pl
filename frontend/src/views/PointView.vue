@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
 import { computed } from 'vue';
+import BackButton from '@/components/BackButton.vue';
 import Gallery from '@/components/Gallery.vue';
 import FloorMap from '@/components/FloorMap.vue';
 
@@ -47,8 +48,11 @@ const loading = computed(() => dataStore.points.length == 0);
             <h1>Nie znaleziono miejsca {{ routePointId }}!</h1>
         </template>
     </section>
+    <BackButton />
 </template>
 
-<style>
-
+<style scoped>
+section {
+    flex: 1;
+}
 </style>

@@ -57,5 +57,7 @@ const $debug = inject('$debug');
 main {
   padding: 20px var(--px-container-padding);
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 </style>

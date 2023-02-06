@@ -66,6 +66,7 @@ button {
   font-weight: 500;
   background: var(--hex-key);
   color: var(--hex-white);
+  border: none;
 }
 
 button.secondary {
