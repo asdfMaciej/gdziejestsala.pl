@@ -1,4 +1,5 @@
 @import './base.css';
+@import 'vue-toast-notification/dist/theme-default.css';
 
 #app {
     min-height: 100vh;

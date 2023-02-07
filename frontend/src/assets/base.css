@@ -70,6 +70,7 @@ button {
 }
 
 button.secondary {
-  background: var(--hex-accent);
-  color: var(--hex-black);
+  border: 2px solid var(--hex-key);
+  background: none;
+  color: var(--hex-key);
 }

@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import QRCodeScanner from '@/components/QRCodeScanner.vue';
 import router from '@/router/index';
+import { changeTitle } from '@/helpers/metatags';
+import { useToast } from 'vue-toast-notification';
 
 const onMatch = (pointId: string | number) => {
-    console.log('onMatch called');
+    useToast().success('Odczytano punkt początkowy!', {
+        position: 'bottom'
+    });
     router.push({
         name: 'select-destination', params: { 'start_id': pointId }
     });
 };
+
+changeTitle('Zeskanuj kod QR');
 </script>
 
 <template>

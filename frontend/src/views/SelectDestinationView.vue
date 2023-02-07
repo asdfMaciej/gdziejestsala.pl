@@ -3,7 +3,9 @@ import PointSelect from "../components/PointSelect.vue";
 import BackButton from "@/components/BackButton.vue";
 import router from '../router/index';
 import { useRoute } from 'vue-router';
+import { useToast } from 'vue-toast-notification';
 import { useDataStore } from '../stores/data';
+import { changeTitle } from '@/helpers/metatags';
 import { computed } from "vue";
 
 const dataStore = useDataStore();
@@ -19,12 +21,16 @@ const pointName = computed(() =>
 );
 
 const onSelectPoint = (pointId: number) => {
+    useToast().info('Wybrano punkt końcowy.', {
+        position: 'bottom'
+    });
+
     router.push({
         name: 'view-route', params: { 'start_id': startId, 'destination_id': pointId }
     });
 };
 
-
+changeTitle('Wybierz miejsce docelowe');
 </script>
 
 <template>

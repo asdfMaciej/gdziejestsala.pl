@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router';
 import { useDataStore } from '@/stores/data';
 import { useRouteStore } from '@/stores/routes';
 import { computed, ref } from 'vue';
+import { changeTitle } from '@/helpers/metatags';
 import FloorMap from '@/components/FloorMap.vue';
 import BackButton from '@/components/BackButton.vue';
 import type { Path } from '@/api/models';
@@ -27,7 +28,7 @@ if (displayPathPoints) {
 
 const header = computed(() => displayPathPoints ? 'Szczegóły piętra' : 'Szczegóły piętra');
 
-
+changeTitle('Szczegóły piętra');
 </script>
 
 <template>
