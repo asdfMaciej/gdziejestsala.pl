@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useToast } from "vue-toast-notification";
 import PointSelect from "../components/PointSelect.vue";
 import router from '../router/index';
 import { useDataStore } from '../stores/data';
@@ -6,6 +7,10 @@ import { useDataStore } from '../stores/data';
 const dataStore = useDataStore();
 
 const onSelectPoint = (pointId: number) => {
+    useToast().info('Wybrano punkt początkowy.', {
+        position: 'bottom'
+    });
+
     router.push({
         name: 'select-destination', params: { 'start_id': pointId }
     });
