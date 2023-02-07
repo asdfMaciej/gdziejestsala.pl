@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import { useDataStore } from '../stores/data';
 import { computed } from 'vue';
+import { changeTitle } from '@/helpers/metatags';
 import BackButton from '@/components/BackButton.vue';
 import Gallery from '@/components/Gallery.vue';
 import FloorMap from '@/components/FloorMap.vue';
@@ -15,6 +16,8 @@ const point = computed(() => dataStore.points.find(point => point.id === parseIn
 
 const floors = computed(() => dataStore.floors.filter(floor => point.value?.floors.some(pointFloor => pointFloor.floor_id === floor.id)));
 const loading = computed(() => dataStore.points.length == 0);
+
+changeTitle('Szczegóły miejsca');
 </script>
 
 <template>

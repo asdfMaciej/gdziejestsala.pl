@@ -2,6 +2,7 @@
 import { useRoute } from 'vue-router';
 import { useRouteStore } from '../stores/routes';
 import { computed, ref } from 'vue';
+import { changeTitle } from '@/helpers/metatags';
 import type { Path } from '@/api/models';
 import RouteDetails from '@/components/RouteDetails.vue';
 import { useDataStore } from '@/stores/data';
@@ -33,6 +34,7 @@ pathPromise.then(result => { path.value = result; })
 let path = ref<Path | null>(null);
 
 const log = console.log;
+changeTitle('Widok trasy');
 </script>
 
 <template>

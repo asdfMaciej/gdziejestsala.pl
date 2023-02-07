@@ -1,5 +1,6 @@
 <script setup lang="ts">
-
+import { changeTitle } from '@/helpers/metatags';
+changeTitle('Gdzie jest sala?');
 </script>
 
 <template>

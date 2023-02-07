@@ -5,6 +5,7 @@ import router from '../router/index';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toast-notification';
 import { useDataStore } from '../stores/data';
+import { changeTitle } from '@/helpers/metatags';
 import { computed } from "vue";
 
 const dataStore = useDataStore();
@@ -29,7 +30,7 @@ const onSelectPoint = (pointId: number) => {
     });
 };
 
-
+changeTitle('Wybierz miejsce docelowe');
 </script>
 
 <template>

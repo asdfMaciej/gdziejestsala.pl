@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useToast } from "vue-toast-notification";
+import { changeTitle } from '@/helpers/metatags';
 import PointSelect from "../components/PointSelect.vue";
 import router from '../router/index';
 import { useDataStore } from '../stores/data';
@@ -16,6 +17,7 @@ const onSelectPoint = (pointId: number) => {
     });
 };
 
+changeTitle('Wybierz miejsce początkowe');
 </script>
 <template>
     <section class="about">
