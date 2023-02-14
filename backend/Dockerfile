@@ -11,4 +11,6 @@ COPY . /app
 # RUN mkdir -p /app/static 
 # RUN chown -R 1000:1000 /app/static
 
+EXPOSE 80
+
 CMD ["/start-reload.sh"]
